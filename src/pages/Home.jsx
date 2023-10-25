@@ -13,11 +13,12 @@ const Home = () => {
   const [refresh, setRefresh] = useState(false);
 
   const { isAuthenticated } = useContext(Context);
+ 
 
   const updateHandler = async (id) => {
     try {
       const { data } = await axios.put(
-        `${server}/task/${id}`,
+        `${server}/users/task/${id}`,
         {},
         {
           withCredentials: true,
@@ -32,7 +33,7 @@ const Home = () => {
   };
   const deleteHandler = async (id) => {
     try {
-      const { data } = await axios.delete(`${server}/task/${id}`, {
+      const { data } = await axios.delete(`${server}/users/task/${id}`, {
         withCredentials: true,
       });
 
@@ -48,7 +49,7 @@ const Home = () => {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        `${server}/task/new`,
+        `${server}/users/task/new`,
         {
           title,
           description,
@@ -74,11 +75,11 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get(`${server}/task/my`, {
+      .get(`${server}/users/task/my`, {
         withCredentials: true,
       })
       .then((res) => {
-        setTasks(res.data.tasks);
+        setTasks(res.data.Tasks);
       })
       .catch((e) => {
         toast.error(e.response.data.message);
@@ -125,7 +126,10 @@ const Home = () => {
             id={i._id}
             key={i._id}
           />
-        ))}
+        ))
+        
+      }
+      
       </section>
     </div>
   );
